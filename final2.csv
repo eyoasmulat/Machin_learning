@@ -1,4 +1,4 @@
-athlete_id,date,postion,value,game_workload,injury
+footballer_id,date,postion,value,game_workload,injury
 1,5/1/2016,midfilder,36,178,No
 1,5/2/2016,midfilder,36,234,yes
 1,5/3/2016,midfilder,56,678,No

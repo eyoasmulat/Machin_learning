@@ -3,7 +3,7 @@
 
 #  # SPORT INJURY ANALYSIS
 
-# In[455]:
+# In[3]:
 
 
 import pandas as pd
@@ -14,25 +14,25 @@ from pylab import rcParams
 
 # **Data Understanding and Exploration:**
 
-# In[458]:
+# In[4]:
 
 
 desu = pd.read_csv('final2.csv')
 
 
-# In[460]:
+# In[5]:
 
 
 desu.info()
 
 
-# In[462]:
+# In[6]:
 
 
 desu.head()
 
 
-# In[464]:
+# In[7]:
 
 
 print(f"Dataset shape: {desu.shape}")
@@ -40,53 +40,53 @@ print(f"Dataset shape: {desu.shape}")
 
 # **Check for missing values**
 
-# In[467]:
+# In[8]:
 
 
 # Check for missing values
 print(desu.isnull().sum())
 
 
-# In[469]:
+# In[9]:
 
 
 #to uderstand the destribution of numerical features
 desu.describe()
 
 
-# In[471]:
+# In[10]:
 
 
 desu = desu.rename(columns={'athlete_id':'footballer_id'}) 
 
 
-# In[473]:
+# In[11]:
 
 
 desu.sort_values("postion", ascending = False,inplace= True)
 
 
-# In[475]:
+# In[12]:
 
 
 desu
 
 
-# In[477]:
+# In[13]:
 
 
 """Maximum workload taken by a player ina game"""
 desu["game_workload"].max()
 
 
-# In[479]:
+# In[14]:
 
 
 """player with maximum worload in a game"""
 desu.loc[desu['game_workload'].idxmax()]
 
 
-# In[481]:
+# In[15]:
 
 
 rcParams['figure.figsize'] = 10, 4
@@ -104,19 +104,19 @@ for i in range(1,31):
     plt.show()
 
 
-# In[334]:
+# In[16]:
 
 
 workload_counts = desu.groupby("footballer_id")['date'].count().sort_values().reset_index()
 
 
-# In[336]:
+# In[17]:
 
 
 workload_counts.head()
 
 
-# In[338]:
+# In[18]:
 
 
 injury_counts = desu.groupby("footballer_id").count().reset_index()
@@ -124,20 +124,20 @@ injury_counts = injury_counts.drop('date', axis =1)
 injury_counts.head()
 
 
-# In[340]:
+# In[19]:
 
 
 player_stats = pd.merge(workload_counts,injury_counts, how='left', left_on=['footballer_id',], right_on = ['value'])
 
 
-# In[342]:
+# In[20]:
 
 
 player_stats.fillna(0, inplace= True)
 player_stats.head()
 
 
-# In[350]:
+# In[21]:
 
 
 # Ensure that 'date' is in datetime format
@@ -148,13 +148,13 @@ desu['year'] = desu['date'].dt.strftime('%Y')
 desu['month'] = desu['date'].dt.strftime('%m')
 
 
-# In[362]:
+# In[22]:
 
 
 desu.head()
 
 
-# In[364]:
+# In[23]:
 
 
 import matplotlib.pyplot as plt
@@ -181,7 +181,7 @@ for footballer in footballer_ids:
 plt.show()
 
 
-# In[357]:
+# In[24]:
 
 
 from pylab import rcParams
@@ -189,7 +189,7 @@ from pylab import rcParams
 
 # For understanding the distribution of numerical features like performance value and game_workload.
 
-# In[332]:
+# In[25]:
 
 
 import matplotlib.pyplot as plt
@@ -214,7 +214,7 @@ plt.show()
 
 # Plotting the number of injures occured by each athlete
 
-# In[44]:
+# In[26]:
 
 
 rcParams['figure.figsize'] = 10, 4
@@ -227,7 +227,7 @@ plt.ylabel('Number of Injuries')
 plt.show()
 
 
-# In[46]:
+# In[27]:
 
 
 """Observed facts
@@ -244,7 +244,7 @@ least injured player 11,5,13,23,25,28 (1)
 
 # **by using count plot to see the distribution of injury status**
 
-# In[57]:
+# In[28]:
 
 
 # Count plot for injury status
@@ -256,13 +256,7 @@ plt.ylabel('Count')
 plt.show()
 
 
-# In[ ]:
-
-
-
-
-
-# In[59]:
+# In[29]:
 
 
 #  Dropping rows with missing values (if any)
@@ -271,7 +265,7 @@ desu.dropna()
 
 # to summarize the data distribution use distribution of catagoricaal features
 
-# In[62]:
+# In[30]:
 
 
 # Distribution of categorical features
@@ -304,18 +298,6 @@ plt.ylabel('Count')
 plt.show()
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
 # 
 # ***Identifying Outliers
 # Outliers can be detected using various methods, such as the Interquartile Range (IQR) method or visualizations like box plots. Here’s how to do it using the IQR method:***
@@ -340,24 +322,6 @@ print(f"Number of outliers in 'performance value': {outliers_value.shape[0]}")
 print(f"Number of outliers in 'game_workload': {outliers_workload.shape[0]}")
 
 
-# In[81]:
-
-
-# Box plot for 'value'
-plt.figure(figsize=(10, 6))
-sns.boxplot(x=desu['value'])
-plt.title('Box Plot for Performance Value')
-plt.xlabel('Performance Value')
-plt.show()
-
-# Box plot for 'game_workload'
-plt.figure(figsize=(10, 6))
-sns.boxplot(x=desu['game_workload'])
-plt.title('Box Plot for Game Workload')
-plt.xlabel('Game Workload')
-plt.show()
-
-
 # In[ ]:
 
 
@@ -365,17 +329,6 @@ plt.show()
 
 
 # # Dtat Quality Issues
-
-# In[84]:
-
-
-# Check unique values in 'postion' and 'injury'
-unique_positions = desu['postion'].unique()
-unique_injuries = desu['injury'].unique()
-
-print("Unique Positions:", unique_positions)
-print("Unique Injuries:", unique_injuries)
-
 
 # In[88]:
 
@@ -393,7 +346,7 @@ print("Unrealistic Values:\n", unrealistic_values)
 
 # # Handle the outlier in the data preprocessing
 
-# In[96]:
+# In[32]:
 
 
 def remove_outliers_iqr(df, feature):
@@ -409,13 +362,7 @@ desu = remove_outliers_iqr(desu, 'value')
 desu = remove_outliers_iqr(desu, 'game_workload')
 
 
-# In[ ]:
-
-
-
-
-
-# In[98]:
+# In[35]:
 
 
 from sklearn.preprocessing import LabelEncoder
@@ -429,86 +376,41 @@ desu['injury'] = label_encoder.fit_transform(desu['injury'])
 
 # One-Hot Encoding for nominal categorical features
 # Assuming 'postion' is nominal
-desu = pd.get_dummies(desu, columns=['postion'], drop_first=True)
+desu = pd.get_dummies(desu, columns=['value'], drop_first=True)
 
 
-# In[101]:
+# In[36]:
 
 
 desu.head()
 
 
-# In[ ]:
-
-
-
-
-
-# # normalize numerical features
-
-# Steps to Scale or Normalize Numerical Features
-# 1. Identify Numerical Features
-# First, identify the numerical features in the dataset. In this case, we will focus on the value and game_workload columns.
-# 
-# 2. Choose a Scaling Method
-# Common methods for scaling include:
-# 
-# Standardization (Z-score normalization): Scales the data to have a mean of 0 and a standard deviation of 1.
-# Min-Max Scaling: Scales the data to a fixed range, typically 0 to 1.
-
-# In[105]:
-
-
-from sklearn.preprocessing import StandardScaler
-
-# Initialize StandardScaler
-scaler = StandardScaler()
-
-# Standardize numerical features
-desu[['value', 'game_workload']] = scaler.fit_transform(desu[['value', 'game_workload']])
-
-
-# In[107]:
+# In[38]:
 
 
 desu
 
 
-# In[109]:
-
-
-# Remove rows with negative values in 'value' and 'game_workload'
-desu = desu[(desu['value'] >= 0) & (desu['game_workload'] >= 0)]
-
-
-# In[111]:
+# In[40]:
 
 
 desu.head()
 
 
-# In[ ]:
-
-
-
-
-
-# In[142]:
+# In[41]:
 
 
 print(desu['injury'].isna().sum())
 
 
-# In[378]:
+# In[42]:
 
 
 desu = desu[desu['injury'].notna()]
 desu
 
 
-# Reducing the number of features can help improve model performance and reduce overfitting. Techniques like Recursive Feature Elimination (RFE) or using feature importance from tree-based models can be employed.
-
-# In[166]:
+# In[43]:
 
 
 import pandas as pd
@@ -546,15 +448,9 @@ y_pred = rf_model.predict(X_test)
 print(classification_report(y_test, y_pred, zero_division=0))
 
 
-# In[ ]:
-
-
-
-
-
 # # Splite Dataset
 
-# In[169]:
+# In[44]:
 
 
 import pandas as pd
@@ -575,17 +471,9 @@ print("Training set shape:", X_train.shape, y_train.shape)
 print("Testing set shape:", X_test.shape, y_test.shape)
 
 
-# In[ ]:
-
-
-
-
-
 # # Train the Model
 
-# To train the selected model (Random Forest Classifier) using the preprocessed training data,
-
-# In[199]:
+# In[46]:
 
 
 import pandas as pd
@@ -601,7 +489,7 @@ data = pd.read_csv('final2.csv')  # Replace with your actual file path
 # data['date_column'] = pd.to_datetime(data['date_column'], errors='coerce')
 
 # Identify categorical columns (replace with your actual column names)
-categorical_cols = ['postion', 'value','athlete_id','date','game_workload']  # Example column names
+categorical_cols = ['postion', 'value','footballer_id','date','game_workload']  # Example column names
 
 # One-Hot Encoding for categorical variables
 data = pd.get_dummies(data, columns=categorical_cols, drop_first=True)
@@ -632,9 +520,7 @@ print(classification_report(y_test, y_pred))
 
 
 
-# Tuning hyperparameters is an essential step in optimizing your model's performance. You can use techniques like Grid Search or Randomized Search with cross-validation to find the best hyperparameters for your Random Forest model.
-
-# In[252]:
+# In[48]:
 
 
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -653,7 +539,7 @@ if data.isnull().sum().any():
     # or use data.fillna(method='ffill', inplace=True)  # Example: fill missing values
 
 # Identify categorical columns and encode them
-categorical_cols = ['postion', 'value', 'athlete_id', 'date', 'game_workload']  # Example column names
+categorical_cols = ['postion', 'value', 'footballer_id', 'date', 'game_workload']  # Example column names
 for col in categorical_cols:
     if col in data.columns:
         data[col] = data[col].astype(str)  # Ensure categorical columns are of type string
@@ -705,18 +591,6 @@ y_pred = best_rf_model.predict(X_test)
 
 # Evaluate the model
 print(classification_report(y_test, y_pred, zero_division=0))
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 #   # Explanation of Evaluation Metrics
@@ -790,135 +664,9 @@ plot_roc_curve_multiclass(best_rf_model, X_test, y_test)
 plot_precision_recall_curve_multiclass(best_rf_model, X_test, y_test)
 
 
-# In[ ]:
-
-
-
-
-
-# 
-# # Confusion Matrix:
 # 
 
-# In[ ]:
-
-
-
-
-
-# In[248]:
-
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import (
-    accuracy_score, classification_report, confusion_matrix, roc_auc_score
-)
-
-# Load the dataset
-data = pd.read_csv('final2.csv')  # Ensure correct file path
-
-# Handle missing values
-data.ffill(inplace=True)
-
-# Define categorical columns and encode them
-categorical_cols = ['postion', 'value', 'athlete_id', 'date', 'game_workload']  # Replace as needed
-for col in categorical_cols:
-    if col in data.columns:
-        data[col] = data[col].astype(str)
-
-data = pd.get_dummies(data, columns=categorical_cols, drop_first=True)
-
-# Define features (X) and target (y)
-if 'injury' not in data.columns:
-    raise ValueError("Target variable 'injury' not found in the dataset.")
-
-X = data.drop('injury', axis=1)
-y = data['injury']
-
-# Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Initialize Dummy Classifier
-dummy_model = DummyClassifier(strategy='most_frequent')  # Predicts most common class
-dummy_model.fit(X_train, y_train)
-dummy_pred = dummy_model.predict(X_test)
-
-# Initialize Random Forest Classifier
-rf_model = RandomForestClassifier(random_state=42)
-rf_model.fit(X_train, y_train)
-rf_pred = rf_model.predict(X_test)
-rf_proba = rf_model.predict_proba(X_test)[:, 1] if len(y.unique()) == 2 else None
-
-# Evaluation Metrics
-print("=== Baseline Dummy Model ===")
-print("Accuracy:", accuracy_score(y_test, dummy_pred))
-print("Classification Report:\n", classification_report(y_test, dummy_pred, zero_division=1))
-
-print("\n=== Random Forest Model ===")
-print("Accuracy:", accuracy_score(y_test, rf_pred))
-if rf_proba is not None:
-    print("ROC AUC Score:", roc_auc_score(y_test, rf_proba))
-print("Classification Report:\n", classification_report(y_test, rf_pred, zero_division=1))
-
-# Confusion Matrices
-plt.figure(figsize=(12, 5))
-
-plt.subplot(1, 2, 1)
-sns.heatmap(confusion_matrix(y_test, dummy_pred), annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix - Dummy Classifier')
-
-plt.subplot(1, 2, 2)
-sns.heatmap(confusion_matrix(y_test, rf_pred), annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix - Random Forest')
-
-plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# 
-
-# In[382]:
-
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, roc_curve
-
-
-# In[384]:
-
-
-# Load the dataset
-df = pd.read_csv('final2.csv')
-
-# Display the first few rows of the dataset
-print(df.head())
-
-# Check for missing values
-print(df.isnull().sum())
-
-# Get basic statistics of the dataset
-print(df.describe())
-
-# Check the distribution of the target variable
-print(df['injury'].value_counts())
-
-
-# In[443]:
+# In[49]:
 
 
 import pandas as pd
@@ -970,7 +718,7 @@ print("Data preparation completed successfully.")
 
 # # Logistic Regression
 
-# In[423]:
+# In[50]:
 
 
 from sklearn.linear_model import LogisticRegression
@@ -994,7 +742,7 @@ print(f"Accuracy: {accuracy_score(y_test, y_pred_log_reg):.2f}")
 
 # # Support Vector Machine (SVM)
 
-# In[ ]:
+# In[52]:
 
 
 from sklearn.svm import SVC
@@ -1016,63 +764,12 @@ print(classification_report(y_test, y_pred_svm, zero_division=1))  # Handle unde
 print(f"Accuracy: {accuracy_score(y_test, y_pred_svm):.2f}")
 
 
-# In[416]:
-
-
-#pip install tensorflow
-
-
-# # Neural Network (Using TensorFlow/Keras)
-
-# In[439]:
-
-
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Input
-import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
-
-# Define the neural network architecture
-model_nn = Sequential([
-    Input(shape=(X_train.shape[1],)),  # Define input shape using Input layer
-    Dense(64, activation='relu'),
-    Dropout(0.2),
-    Dense(32, activation='relu'),
-    Dropout(0.2),
-    Dense(1, activation='sigmoid')
-])
-
-# Compile the model
-model_nn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-
-# Train the model
-history = model_nn.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2, verbose=1)
-
-# Make predictions
-y_pred_nn = (model_nn.predict(X_test) > 0.5).astype(int)
-
-# Evaluate the model
-print("Neural Network Evaluation:")
-print(confusion_matrix(y_test, y_pred_nn))
-print(classification_report(y_test, y_pred_nn, zero_division=1))
-print(f"Accuracy: {accuracy_score(y_test, y_pred_nn):.2f}")
-
-# Plot training history
-plt.plot(history.history['accuracy'], label='Training Accuracy')
-plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-plt.title('Training and Validation Accuracy')
-plt.xlabel('Epoch')
-plt.ylabel('Accuracy')
-plt.legend()
-plt.show()
-
-
 # #  K-Nearest Neighbors (KNN)
 
-# In[406]:
+# In[70]:
 
 
+import joblib
 from sklearn.neighbors import KNeighborsClassifier
 
 # Initialize KNN
@@ -1090,136 +787,113 @@ print(confusion_matrix(y_test, y_pred_knn))
 print(classification_report(y_test, y_pred_knn))
 print(f"Accuracy: {accuracy_score(y_test, y_pred_knn):.2f}")
 
-
-# In[433]:
-
-
-#pip install xgboost
+joblib.dump(knn_model,'model_nn.joblib')
 
 
-# # Comparison of Models
-
-# In[434]:
+# In[ ]:
 
 
-import xgboost as xgb
-from sklearn.metrics import accuracy_score
-
-# Assuming your data (X_train, X_test, y_train, y_test) is already preprocessed
-
-# Train an XGBoost model
-xgb_model = xgb.XGBClassifier(random_state=42)
-xgb_model.fit(X_train, y_train)
-
-# Make predictions with XGBoost
-y_pred_xgb = xgb_model.predict(X_test)
-
-# Now define your results dictionary as before
-results = {
-    'Model': ['Random Forest', 'Logistic Regression', 'SVM', 'XGBoost', 'Neural Network', 'KNN'],
-    'Accuracy': [
-        accuracy_score(y_test, y_pred),
-        accuracy_score(y_test, y_pred_log_reg),
-        accuracy_score(y_test, y_pred_svm),
-        accuracy_score(y_test, y_pred_xgb),  # Now it's defined
-        accuracy_score(y_test, y_pred_nn),
-        accuracy_score(y_test, y_pred_knn)
-    ]
-}
-
-results_df = pd.DataFrame(results)
-print(results_df)
+pip 
+install 
+joblib;
+# Load the model and scaler
+import joblib
+model = joblib.load('model_nn.joblib')
 
 
-# # Hyperparameter Tuning (Optional)
+# Example of making a prediction
+new_data = pd.DataFrame({
+    'footballer_id': [1],
+    'postion': [0],  # Encoded value for 'midfielder'
+    'value': [36],
+    'game_workload': [178],
+    'year': [2016],
+    'month': [5],
+    'day': [1]
+})
 
-# In[431]:
+# Preprocess the new data
+new_data_scaled = scaler.transform(new_data)
+
+# Make a prediction
+prediction = model.predict(new_data_scaled)
+print(f"Predicted Injury: {'Yes' if prediction[0] == 1 else 'No'}") 
 
 
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, roc_auc_score, roc_curve
-import matplotlib.pyplot as plt
-
-# Make predictions on the test set
-y_pred = model.predict(X_test)
-
-# Evaluate the model
-print("Confusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
-
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-print("\nAccuracy Score:")
-print(accuracy_score(y_test, y_pred))
-
-# ROC AUC Score (Multi-Class Classification using One-vs-Rest)
-y_pred_proba = model.predict_proba(X_test)  # Probabilities for each class
-roc_auc = roc_auc_score(y_test, y_pred_proba, multi_class='ovr', average='macro')
-print(f"\nROC AUC Score: {roc_auc}")
-
-# Plot ROC Curve for each class
-# For multi-class, we need to plot ROC for each class individually
-n_classes = y_pred_proba.shape[1]
-fpr = {}
-tpr = {}
-roc_auc = {}
-
-plt.figure(figsize=(8, 6))
-
-for i in range(n_classes):
-    fpr[i], tpr[i], _ = roc_curve(y_test == i, y_pred_proba[:, i])
-    roc_auc[i] = roc_auc_score(y_test == i, y_pred_proba[:, i])  # Compute AUC for each class
-    plt.plot(fpr[i], tpr[i], label=f'Class {i} (AUC = {roc_auc[i]:.2f})')
-
-# Plotting random chance line
-plt.plot([0, 1], [0, 1], 'k--')
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Receiver Operating Characteristic (ROC) Curve for Each Class')
-plt.legend(loc="lower right")
-plt.show()
-# Get feature importances
-importances = model.feature_importances_
-feature_names = X.columns
-
-# Create a DataFrame for visualization
-feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': importances})
-feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
-
-# Plot feature importances
-plt.figure(figsize=(10, 6))
-plt.barh(feature_importance_df['Feature'], feature_importance_df['Importance'])
-plt.xlabel('Importance')
-plt.title('Feature Importance')
-plt.show()
+# In[ ]:
 
 
 import joblib
+import pandas as pd
 
-# Save the trained model
-joblib.dump(model, 'injury_prediction_model.pkl')
+# Load the model and scaler
+model = joblib.load('model_nn.joblib')
+ # Assuming scaler is also saved
 
-# Save the scaler
-joblib.dump(scaler, 'scaler.pkl')
+# Get input from the user
+footballer_id = int(input("Enter Footballer ID: "))
+postion = input("Enter Position (e.g., 'midfielder', 'forward', 'defender'): ")
+# You need to encode the position input as per your model's requirements.
+# Assuming positions are encoded as integers; you might need to map them manually.
+position_map = {'midfielder': 0, 'forward': 1, 'defender': 2}  # Example encoding map
+encoded_position = position_map.get(postion.lower(), -1)
+
+value = float(input("Enter Footballer Value: "))
+game_workload = float(input("Enter Game Workload: "))
+year = int(input("Enter Year: "))
+month = int(input("Enter Month: "))
+day = int(input("Enter Day: "))
+
+# Check for invalid position input
+if encoded_position == -1:
+    print("Invalid position entered.")
+else:
+    # Prepare the new data for prediction
+    new_data = pd.DataFrame({
+        'footballer_id': [footballer_id],
+        'postion': [encoded_position],  # Encoded position
+        'value': [value],
+        'game_workload': [game_workload],
+        'year': [year],
+        'month': [month],
+        'day': [day]
+    })
+
+    # Preprocess the new data using the scaler
+    new_data_scaled = scaler.transform(new_data)
+
+    # Make a prediction
+    prediction = model.predict(new_data_scaled)
+    print(f"Predicted Injury: {'Yes' if prediction[0] == 1 else 'No'}")
 
 
-# In[485]:
+# In[ ]:
 
 
-#pip install fastapi uvicorn joblib pandas
+pip 
+install;
+fastapi ;
+uvicorn ;
+joblib;
+pandas;
 
 
-# In[491]:
+# In[ ]:
 
 
+pip 
+install;
+nbconvert;
 
-#pip install nbconvert
+
+# In[15]:
+
 
 import nbformat
 from nbconvert import PythonExporter
 
 # Load the notebook
-notebook_filename = "finalMac.ipynb"
+notebook_filename = "final2.ipynb"
 with open(notebook_filename, 'r', encoding='utf-8') as f:
     notebook_content = nbformat.read(f, as_version=4)
 
@@ -1234,103 +908,39 @@ with open(python_filename, 'w', encoding='utf-8') as f:
 
 print(f"Converted {notebook_filename} to {python_filename}")
 
-#pip install nbconvert
 
-from fastapi import FastAPI, HTTPException
-import joblib
-import pandas as pd
-from pydantic import BaseModel
+# In[ ]:
 
-# Load the trained model and scaler
-model = joblib.load('injury_prediction_model.pkl')
-scaler = joblib.load('scaler.pkl')
 
-# Define the input data schema using Pydantic
-class InjuryPredictionInput(BaseModel):
-    athlete_id: int
-    postion: str
-    value: float
-    game_workload: int
-    year: int
-    month: int
-    day: int
+pip 
+install 
+fastapi ;
+uvicorn ;
+joblib ;pandas
 
-# Initialize FastAPI app
-app = FastAPI()
 
-# Define the prediction endpoint
-@app.post("/predict")
-def predict_injury(input_data: InjuryPredictionInput):
-    try:
-        # Convert input data to a DataFrame
-        input_dict = input_data.dict()
-        input_df = pd.DataFrame([input_dict])
+# In[ ]:
 
-        # Encode the 'postion' column (if necessary)
-        # Assuming 'postion' is already encoded in the model
-        input_df['postion'] = input_df['postion'].map({'midfielder': 0, 'attacker': 1})
 
-        # Standardize the features
-        input_scaled = scaler.transform(input_df)
+pip 
+fastapi 
+uvicorn 
+pydantic 
+joblib;
 
-        # Make a prediction
-        prediction = model.predict(input_scaled)
-        prediction_proba = model.predict_proba(input_scaled)
 
-        # Return the prediction result
-        return {
-            "prediction": int(prediction[0]),
-            "probability": float(prediction_proba[0][1]),
-            "message": "Injury predicted successfully."
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+# In[2]:
 
-# Root endpoint
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Sports Injury Prediction API!"}
-#pip install fastapi uvicorn joblib pandas
-#pip install fastapi uvicorn pydantic joblib
-import joblib
-# Save your model
-joblib.dump(model_nn, 'model_nn.pkl')
-print("Model saved successfully!")
-from fastapi import FastAPI
-from pydantic import BaseModel
-import joblib
-import numpy as np
 
-# Load the trained model
-model = joblib.load('model_nn.pkl')
-
-# Initialize FastAPI
-app = FastAPI()
-
-# Define input schema
-class ModelInput(BaseModel):
-    feature1: float
-    feature2: float
-    feature3: float
-    feature4: float
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Machine Learning API!"}
-
-@app.post("/predict/")
-def predict(input_data: ModelInput):
-    # Extract features as a NumPy array
-    features = np.array([[input_data.feature1, input_data.feature2, input_data.feature3, input_data.feature4]])
-    
-    # Make prediction
-    prediction = model.predict(features)
-    return {"prediction": int(prediction[0])}
-#pip install fastapi uvicorn
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
+
+
+# In[3]:
+
+
 # Create a synthetic dataset
 X, y = make_classification(n_samples=1000, n_features=4, random_state=42)
 
@@ -1344,20 +954,61 @@ rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_model.fit(X_train, y_train)
 
 # Save the trained model using Joblib
-joblib.dump(rf_model, 'model_nn.pkl')
+joblib.dump(rf_model, 'model_nn.joblib')
+
+
+
+
+
+
+# In[4]:
+
+
 import joblib
-# Assuming `model` is your trained model
-joblib.dump(rf_model, 'model_nn.pkl')
-#pip install uvicorn
-#pip install FastAPi
+import numpy as np
+
+# Load the trained model
+rf_model = joblib.load('model_nn.joblib')
+
+# Example data for prediction (you can replace this with new data)
+X_new = np.array([[0.5, -1.2, 3.1, 0.7]])
+
+# Make a prediction
+prediction = rf_model.predict(X_new)
+
+# Output the prediction
+print(f"Predicted Class: {prediction[0]}")
+
+
+# In[46]:
+
+
+get_ipython().system('uvicorn final2:app --no-reload')
+
+
+# In[ ]:
+
+
+
+
+
+# In[50]:
+
+
+get_ipython().system('uvicorn final2:app --reload')
+
+
+# In[57]:
+
+
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 # Load the trained model and scaler
-model = joblib.load('model_nn.pkl')
-scaler = joblib.load('scaler.pkl')
+model = joblib.load('model_nn.joblib')
+# scaler = joblib.load('scaler.joblib')
 
 # Define the input data schema using Pydantic
 class InjuryPredictionInput(BaseModel):
@@ -1403,9 +1054,25 @@ def predict_injury(input_data: InjuryPredictionInput):
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Sports Injury Prediction API!"}
+
+
+# In[60]:
+
+
+pip 
+install
+fastapi 
+uvicorn
+
+
+# In[62]:
+
+
+get_ipython().system('uvicorn final2:app --reload')
+
+
+# In[63]:
+
+
 get_ipython().system('uvicorn final2:app --host 0.0.0.0 --port 8000 --reload')
-
-
-
-
 
